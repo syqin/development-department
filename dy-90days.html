@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>长效效果包-90天客户调研报告</title>
+<style>
+  :root {
+    --primary: #2563eb;
+    --primary-dark: #1e40af;
+    --primary-light: #dbeafe;
+    --success: #16a34a;
+    --success-light: #dcfce7;
+    --warning: #ea580c;
+    --warning-light: #fed7aa;
+    --danger: #dc2626;
+    --danger-light: #fee2e2;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--gray-100);
+    color: var(--gray-800);
+    line-height: 1.7;
+    padding: 40px 20px;
+  }
+  .container { max-width: 1400px; margin: 0 auto; }
+
+  /* Cover */
+  .cover {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
+    color: white;
+    border-radius: 16px;
+    padding: 60px 48px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 500px; height: 500px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -30%; left: -10%;
+    width: 300px; height: 300px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  .cover-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    backdrop-filter: blur(4px);
+  }
+  .cover h1 { font-size: 32px; font-weight: 700; margin-bottom: 12px; position: relative; z-index: 1; }
+  .cover .subtitle { font-size: 16px; opacity: 0.85; position: relative; z-index: 1; }
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    position: relative;
+    z-index: 1;
+  }
+  .cover-meta-item { font-size: 13px; }
+  .cover-meta-item .label { opacity: 0.6; display: block; margin-bottom: 2px; }
+  .cover-meta-item .value { font-weight: 600; font-size: 15px; }
+
+  /* Section */
+  .section {
+    background: white;
+    border-radius: 12px;
+    padding: 36px 40px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--gray-100);
+  }
+  .section-num {
+    width: 32px; height: 32px;
+    background: var(--primary);
+    color: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section-title { font-size: 20px; font-weight: 700; color: var(--gray-900); }
+  .section-body { font-size: 15px; color: var(--gray-700); }
+
+  /* KPI Cards */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  .kpi-card {
+    background: var(--gray-50);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid var(--gray-200);
+  }
+  .kpi-card .kpi-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 4px;
+  }
+  .kpi-card .kpi-label {
+    font-size: 13px;
+    color: var(--gray-500);
+  }
+  .kpi-card.success .kpi-value { color: var(--success); }
+  .kpi-card.warning .kpi-value { color: var(--warning); }
+  .kpi-card.danger .kpi-value { color: var(--danger); }
+
+  /* Chart area */
+  .chart-box {
+    background: var(--gray-50);
+    border-radius: 10px;
+    padding: 24px;
+    margin: 16px 0;
+    border: 1px solid var(--gray-200);
+  }
+
+  /* Bar chart */
+  .bar-chart { display: flex; flex-direction: column; gap: 12px; }
+  .bar-row { display: flex; align-items: center; gap: 12px; }
+  .bar-label {
+    width: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-600);
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .bar-track {
+    flex: 1;
+    height: 28px;
+    background: var(--gray-200);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    transition: width 0.3s;
+  }
+  .bar-fill.member { background: var(--success); }
+  .bar-fill.non-member { background: var(--gray-400); }
+  .stacked-bar-seg {
+    display: inline-block;
+    height: 100%;
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+  }
+
+  /* Table */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 12px 0;
+  }
+  .data-table th {
+    background: var(--gray-50);
+    color: var(--gray-600);
+    font-weight: 600;
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 2px solid var(--gray-200);
+    white-space: nowrap;
+  }
+  .data-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--gray-100);
+    color: var(--gray-700);
+  }
+  .data-table tr:hover { background: var(--gray-50); }
+
+  /* Appendix table with survey content */
+  .appendix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin: 12px 0;
+    table-layout: fixed;
+  }
+  .appendix-table th {
+    background: var(--gray-50);
+    color: var(--gray-600);
+    font-weight: 600;
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 2px solid var(--gray-200);
+    white-space: nowrap;
+    font-size: 12px;
+  }
+  .appendix-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--gray-100);
+    color: var(--gray-700);
+    vertical-align: top;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.6;
+  }
+  .appendix-table tr:hover { background: var(--gray-50); }
+  .appendix-table .col-num { width: 30px; text-align: center; }
+  .appendix-table .col-company { width: 130px; }
+  .appendix-table .col-industry { width: 65px; }
+  .appendix-table .col-status { width: 65px; }
+  .appendix-table .col-type { width: 80px; }
+  .appendix-table .col-owner { width: 50px; }
+  .appendix-table .col-price { width: 50px; text-align: right; }
+  .appendix-table .col-survey {
+    width: auto;
+    min-width: 280px;
+    font-size: 11px;
+    color: var(--gray-600);
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.55;
+  }
+  .appendix-table .col-survey .survey-label {
+    font-weight: 600;
+    color: var(--gray-700);
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .badge-green { background: var(--success-light); color: var(--success); }
+  .badge-red { background: var(--danger-light); color: var(--danger); }
+  .badge-blue { background: var(--primary-light); color: var(--primary); }
+  .badge-orange { background: var(--warning-light); color: var(--warning); }
+
+  /* Finding card */
+  .finding-card {
+    background: var(--gray-50);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .finding-card.success { border-left-color: var(--success); }
+  .finding-card.warning { border-left-color: var(--warning); }
+  .finding-card.danger { border-left-color: var(--danger); }
+  .finding-card .finding-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--gray-800);
+    margin-bottom: 6px;
+  }
+  .finding-card .finding-desc {
+    font-size: 14px;
+    color: var(--gray-600);
+  }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 4px; bottom: 4px;
+    width: 2px;
+    background: var(--gray-200);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -24px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--primary);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--primary);
+  }
+  .timeline-item.success::before { background: var(--success); box-shadow: 0 0 0 2px var(--success); }
+  .timeline-date { font-size: 12px; color: var(--gray-400); margin-bottom: 2px; }
+  .timeline-content { font-size: 14px; color: var(--gray-700); }
+
+  /* Recommendation list */
+  .rec-list { counter-reset: rec; }
+  .rec-item {
+    counter-increment: rec;
+    padding: 16px 16px 16px 52px;
+    margin-bottom: 12px;
+    background: var(--gray-50);
+    border-radius: 8px;
+    position: relative;
+    border: 1px solid var(--gray-200);
+  }
+  .rec-item::before {
+    content: counter(rec);
+    position: absolute;
+    left: 16px; top: 16px;
+    width: 24px; height: 24px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .rec-item .rec-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--gray-800);
+    margin-bottom: 4px;
+  }
+  .rec-item .rec-desc {
+    font-size: 14px;
+    color: var(--gray-600);
+  }
+  .rec-item .priority {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  /* Summary box */
+  .summary-box {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 16px;
+    border: 1px solid var(--primary-light);
+  }
+  .summary-box h4 {
+    font-size: 16px;
+    color: var(--primary-dark);
+    margin-bottom: 10px;
+  }
+  .summary-box p { font-size: 14px; color: var(--gray-600); }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 32px 0;
+    color: var(--gray-400);
+    font-size: 13px;
+  }
+
+  @media (max-width: 768px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .cover { padding: 40px 24px; }
+    .cover h1 { font-size: 24px; }
+    .section { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Cover -->
+<div class="cover">
+  <span class="cover-tag">客户调研报告</span>
+  <h1>长效效果包-90天客户调研分析报告</h1>
+  <p class="subtitle">非会员产品客户转化路径与增长机会分析</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <span class="label">调研周期</span>
+      <span class="value">2026.06.02 — 06.29</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="label">样本量</span>
+      <span class="value">23 家客户</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="label">调研团队</span>
+      <span class="value">4 位负责人</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="label">报告日期</span>
+      <span class="value">2026年7月9日</span>
+    </div>
+  </div>
+</div>
+
+<!-- Executive Summary -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">S</div>
+    <div class="section-title">执行摘要</div>
+  </div>
+  <div class="section-body">
+    <div class="summary-box">
+      <h4>核心结论</h4>
+      <p>本次调研覆盖 23 家"长效效果包-90天"非会员产品客户，横跨 15 个行业。按"同主体已有会员账号视为已转化"口径统计，<strong>整体会员转化率为 39.1%</strong>（9/23），其中陈茜组转化率最高达 67%。未转化的核心原因集中在"招聘需求量小/不长期"（占比50%）、"客户主观偏好单购"和"竞品流失/效果不佳"三大类。直接转化客户的平均客单价为 <strong>3,429 元</strong>，转化的关键驱动力为销售主动触达 + 优惠策略 + 需求匹配。</p>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-value">23</div>
+        <div class="kpi-label">调研客户总数</div>
+      </div>
+      <div class="kpi-card success">
+        <div class="kpi-value">9</div>
+        <div class="kpi-label">已转化会员（含同主体）</div>
+      </div>
+      <div class="kpi-card warning">
+        <div class="kpi-value">14</div>
+        <div class="kpi-label">未转化会员</div>
+      </div>
+      <div class="kpi-card success">
+        <div class="kpi-value">39.1%</div>
+        <div class="kpi-label">整体转化率</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 1. 会员转化分析 -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div class="section-title">会员转化分析</div>
+  </div>
+  <div class="section-body">
+    <p style="margin-bottom:16px;">本次调研中，同主体下已有其他账号合作会员的客户，视为已转化会员（共4家）。在此口径下，23家客户中共有9家已转化为会员，14家未转化。</p>
+
+    <h4 style="margin-bottom:12px; color:var(--gray-700);">1.1 各负责人转化表现</h4>
+    <div class="chart-box">
+      <div class="bar-row" style="margin-bottom:10px;">
+        <div class="bar-label">陈茜</div>
+        <div class="bar-track" style="height:32px;">
+          <div class="stacked-bar-seg" style="width:67%; background:var(--success);">会员 4</div>
+          <div class="stacked-bar-seg" style="width:33%; background:var(--gray-300); color:var(--gray-600);">非会员 2</div>
+        </div>
+        <span style="width:50px; text-align:right; font-size:13px; font-weight:600; color:var(--success);">67%</span>
+      </div>
+      <div class="bar-row" style="margin-bottom:10px;">
+        <div class="bar-label">白影</div>
+        <div class="bar-track" style="height:32px;">
+          <div class="stacked-bar-seg" style="width:40%; background:var(--success);">会员 2</div>
+          <div class="stacked-bar-seg" style="width:60%; background:var(--gray-300); color:var(--gray-600);">非会员 3</div>
+        </div>
+        <span style="width:50px; text-align:right; font-size:13px; font-weight:600; color:var(--warning);">40%</span>
+      </div>
+      <div class="bar-row" style="margin-bottom:10px;">
+        <div class="bar-label">刘虎</div>
+        <div class="bar-track" style="height:32px;">
+          <div class="stacked-bar-seg" style="width:29%; background:var(--success);">会员 2</div>
+          <div class="stacked-bar-seg" style="width:71%; background:var(--gray-300); color:var(--gray-600);">非会员 5</div>
+        </div>
+        <span style="width:50px; text-align:right; font-size:13px; font-weight:600; color:var(--warning);">29%</span>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">秦思雨</div>
+        <div class="bar-track" style="height:32px;">
+          <div class="stacked-bar-seg" style="width:20%; background:var(--success);">会员 1</div>
+          <div class="stacked-bar-seg" style="width:80%; background:var(--gray-300); color:var(--gray-600);">非会员 4</div>
+        </div>
+        <span style="width:50px; text-align:right; font-size:13px; font-weight:600; color:var(--danger);">20%</span>
+      </div>
+    </div>
+    <p style="font-size:14px; color:var(--gray-500); margin-top:8px;">陈茜组转化率显著领先（67%），其客户多为休闲娱乐/制造业/美业，销售触达方式多样（0.1元商机、主动咨询、老客续费）。白影组在同主体口径修正后转化率从0%提升至40%。</p>
+
+    <h4 style="margin:20px 0 12px; color:var(--gray-700);">1.2 已转化会员客户明细</h4>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>公司名称</th>
+          <th>行业</th>
+          <th>转化类型</th>
+          <th>成交价</th>
+          <th>负责人</th>
+          <th>转化关键因素</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>贵州比智高生物科技有限公司</td>
+          <td>医疗</td>
+          <td><span class="badge badge-green">直接转化</span></td>
+          <td><span class="badge badge-blue">3,502元</span></td>
+          <td>刘虎</td>
+          <td>招聘需求多 + 销售多次线下拜访 + 9折优惠券</td>
+        </tr>
+        <tr>
+          <td>重庆近水医院管理有限公司</td>
+          <td>医疗</td>
+          <td><span class="badge badge-orange">同主体已有会员</span></td>
+          <td>-</td>
+          <td>刘虎</td>
+          <td>主体其他账号已于25年12月合作全网招3.0</td>
+        </tr>
+        <tr>
+          <td>沈阳市和平区桃姐串吧</td>
+          <td>餐饮</td>
+          <td><span class="badge badge-green">直接转化</span></td>
+          <td><span class="badge badge-blue">3,000元</span></td>
+          <td>秦思雨</td>
+          <td>销售挽回 + 单购效果不佳 + 推荐简历宝套餐</td>
+        </tr>
+        <tr>
+          <td>杭州欧冠装饰工程有限公司</td>
+          <td>建筑业</td>
+          <td><span class="badge badge-orange">同主体已有会员</span></td>
+          <td>-</td>
+          <td>白影</td>
+          <td>同主体其他账号已续费3980元套餐（仍在服务中）</td>
+        </tr>
+        <tr>
+          <td>上海毓博文才网络科技有限公司</td>
+          <td>互联网</td>
+          <td><span class="badge badge-orange">同主体已有会员</span></td>
+          <td>-</td>
+          <td>白影</td>
+          <td>同主体其他账号已合作3000元赶集简历宝套餐</td>
+        </tr>
+        <tr>
+          <td>上海久斯台球用品制造有限公司</td>
+          <td>制造业</td>
+          <td><span class="badge badge-green">直接转化</span></td>
+          <td><span class="badge badge-blue">3,383元</span></td>
+          <td>陈茜</td>
+          <td>5年老客户 + 价格对比话术 + 85折新签活动</td>
+        </tr>
+        <tr>
+          <td>纳源健康科技重庆有限公司</td>
+          <td>休闲娱乐</td>
+          <td><span class="badge badge-green">直接转化</span></td>
+          <td><span class="badge badge-blue">3,582元</span></td>
+          <td>陈茜</td>
+          <td>过期未续费客户主动咨询 + 优惠券</td>
+        </tr>
+        <tr>
+          <td>河南省豆小新美容服务有限公司</td>
+          <td>美业</td>
+          <td><span class="badge badge-green">直接转化</span></td>
+          <td><span class="badge badge-blue">3,680元</span></td>
+          <td>陈茜</td>
+          <td>0.1元商机触达 + 会员曝光优势话术</td>
+        </tr>
+        <tr>
+          <td>太原合一众创健身管理咨询有限公司</td>
+          <td>休闲娱乐</td>
+          <td><span class="badge badge-orange">同主体已有会员</span></td>
+          <td>-</td>
+          <td>陈茜</td>
+          <td>客户有多个账号，其中一账号已合作会员</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:14px; color:var(--gray-500); margin-top:8px;">9家已转化客户中，5家为直接转化（平均客单价3,429元，价格区间3,000—3,680元），4家为同主体已有会员。直接转化的5家客户均享受了不同程度的优惠策略（85折/9折/优惠券）。</p>
+
+    <h4 style="margin:20px 0 12px; color:var(--gray-700);">1.3 转化路径分析</h4>
+    <div class="timeline">
+      <div class="timeline-item success">
+        <div class="timeline-date">路径一：非会员 → 优惠券驱动 → 会员</div>
+        <div class="timeline-content">先购买90天非会员包 → 销售多次拜访触达 → 配合折扣优惠（85折/9折/优惠券）→ 转化套餐会员。<strong>典型客户：贵州比智高、上海久斯台球</strong></div>
+      </div>
+      <div class="timeline-item success">
+        <div class="timeline-date">路径二：过期未续费 → 主动回访 → 重新转化</div>
+        <div class="timeline-content">原会员到期未续 → 销售持续触达/客户主动咨询 → 匹配需求推荐简历宝套餐 → 成交。<strong>典型客户：桃姐串吧、纳源健康</strong></div>
+      </div>
+      <div class="timeline-item success">
+        <div class="timeline-date">路径三：商机触达 → 需求挖掘 → 会员转化</div>
+        <div class="timeline-content">通过0.1元商机获取线索 → 销售联系挖掘招聘需求 → 会员曝光/精准推送话术 → 成交。<strong>典型客户：豆小新美容</strong></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">路径四：同主体已有会员 → 单购为补充/误操作</div>
+        <div class="timeline-content">客户集团/主体下其他账号已合作会员，此账号的90天单购仅为补充发帖或误操作购买，实质已是会员客户。<strong>典型客户：重庆近水医院、杭州欧冠装饰、上海毓博文才、太原合一众创健身</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. 未转化原因分析 -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div class="section-title">未转化原因深度分析</div>
+  </div>
+  <div class="section-body">
+    <p style="margin-bottom:16px;">14家未转化会员客户的原因经归纳分析，可归为以下五大类：</p>
+
+    <div class="finding-card warning">
+      <div class="finding-title">原因一：招聘需求量小/非长期（7家，占比50%）</div>
+      <div class="finding-desc">
+        客户招聘需求受项目周期、季节性、补贴政策等影响，当前仅有1-4个职位需求，认为单购比套餐更划算。<br>
+        <strong>典型客户：</strong>青岛富凯建筑（项目制招聘）、上海盛然物流（6次单购但反馈无需求）、云南鸿沃物流（4个职位无销售绑定）、中国人寿保险杭州（受公司补贴影响）、中国平安人寿保险浙江（自负盈亏）、嘉善蓝思人力（项目转至武汉）、深圳鑫川粤汽车服务（店面忙人手不够）
+      </div>
+    </div>
+
+    <div class="finding-card">
+      <div class="finding-title">原因二：客户主观偏好自主操作/单购（2家，占比14%）</div>
+      <div class="finding-desc">
+        客户主观性强，喜欢自己操作平台，认为单购200元/90天比3980元套餐性价比更高。<br>
+        <strong>典型客户：</strong>上海青雀保健按摩（明确表示单购更划算，"花200多发布90天，为什么要花3980办套餐"）、杭州手拉手工具制造（想自己用平台）
+      </div>
+    </div>
+
+    <div class="finding-card danger">
+      <div class="finding-title">原因三：竞品流失/效果不佳（1家，占比7%）</div>
+      <div class="finding-desc">
+        客户转向竞品（Boss直聘战略合作），且对58平台效果不满（主动聊天次数未达预期）。<br>
+        <strong>典型客户：</strong>四川链家房地产（集团与Boss战略合作，58此前5倍收费丢客，"每天说100次主动聊天实际只有30个"）
+      </div>
+    </div>
+
+    <div class="finding-card">
+      <div class="finding-title">原因四：预算受限/成本控制（2家，占比14%）</div>
+      <div class="finding-desc">
+        客户预算有限，拉升不到会员套餐价位，老板控制成本不给钱。<br>
+        <strong>典型客户：</strong>西安海斯荣酒店（预算有限，后续以非会员为主）、双流柏楠饰品店（老板不给钱，所有平台蹭用，"东蹭点西蹭点"）
+      </div>
+    </div>
+
+    <div class="finding-card warning">
+      <div class="finding-title">原因五：无实际招聘需求/误购（2家，占比14%）</div>
+      <div class="finding-desc">
+        CRM录音显示客户反馈无招聘需求，或仅有个别低频岗位需求。<br>
+        <strong>典型客户：</strong>合肥学文文化培训学校（多个销售联系均表示无需求）、杭州夏尔巴艺术培训（仅招保洁1人）
+      </div>
+    </div>
+
+    <div class="chart-box" style="margin-top:20px;">
+      <h4 style="margin-bottom:12px; color:var(--gray-700);">未转化原因占比分布</h4>
+      <div class="bar-chart">
+        <div class="bar-row"><div class="bar-label" style="width:160px;">需求小/非长期</div><div class="bar-track"><div class="bar-fill" style="width:50%; background:var(--warning);">50%</div></div><span style="width:30px; font-size:13px;">7家</span></div>
+        <div class="bar-row"><div class="bar-label" style="width:160px;">偏好自主操作</div><div class="bar-track"><div class="bar-fill" style="width:14%; background:var(--gray-500);">14%</div></div><span style="width:30px; font-size:13px;">2家</span></div>
+        <div class="bar-row"><div class="bar-label" style="width:160px;">预算受限</div><div class="bar-track"><div class="bar-fill" style="width:14%; background:var(--gray-500);">14%</div></div><span style="width:30px; font-size:13px;">2家</span></div>
+        <div class="bar-row"><div class="bar-label" style="width:160px;">无需求/误购</div><div class="bar-track"><div class="bar-fill" style="width:14%; background:var(--warning);">14%</div></div><span style="width:30px; font-size:13px;">2家</span></div>
+        <div class="bar-row"><div class="bar-label" style="width:160px;">竞品流失/效果差</div><div class="bar-track"><div class="bar-fill" style="width:7%; background:var(--danger);">7%</div></div><span style="width:30px; font-size:13px;">1家</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3. 核心发现 -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div class="section-title">核心发现</div>
+  </div>
+  <div class="section-body">
+
+    <div class="finding-card success">
+      <div class="finding-title">发现一：优惠策略是直接转化的关键催化剂</div>
+      <div class="finding-desc">5家直接转化客户全部使用了不同形式的优惠（85折新签、9折优惠券、老客优惠等），平均成交价3,429元低于标准套餐价。优惠策略有效降低了客户决策门槛，尤其对价格敏感的中小微客户效果显著。</div>
+    </div>
+
+    <div class="finding-card success">
+      <div class="finding-title">发现二：销售主动触达是转化的核心驱动力</div>
+      <div class="finding-desc">陈茜组67%的高转化率，关键在于触达方式多样化：0.1元商机获取线索、过期未续费客户主动回访、老客户价格对比话术。被动等待客户上门的转化效果明显弱于主动出击。</div>
+    </div>
+
+    <div class="finding-card warning">
+      <div class="finding-title">发现三：单购与套餐的性价比认知差异是最大阻力</div>
+      <div class="finding-desc">未转化客户中50%的核心原因是"需求量小觉得单购更划算"。非会员单购200元/90天的价格对中小微客户具有强吸引力，而3980元套餐的年化价格在需求不足时缺乏说服力。这一认知差异需要更精细化的产品打包和话术应对。</div>
+    </div>
+
+    <div class="finding-card">
+      <div class="finding-title">发现四：同主体多账号合作是重要的"隐性转化"渠道</div>
+      <div class="finding-desc">9家已转化客户中有4家（44%）是通过同主体其他账号合作会员实现的"隐性转化"。这说明客户的会员合作可能分散在多个账号中，单看某一账号的会员状态会低估实际转化率。跨账号视角的客户管理对准确评估转化效果至关重要。</div>
+    </div>
+
+    <div class="finding-card danger">
+      <div class="finding-title">发现五：大客户竞品流失风险需重点关注</div>
+      <div class="finding-desc">链家案例显示，58此前5倍定价策略导致大客户流失至Boss直聘，且难以挽回。高价值客户的竞品替代风险需要从产品体验、定价策略、客户关系三个维度系统性应对。</div>
+    </div>
+
+    <div class="finding-card">
+      <div class="finding-title">发现六：非会员产品充当"入口"角色</div>
+      <div class="finding-desc">90天长效效果包在部分客户中起到了"体验入口"的作用——客户先通过低价单购体验平台效果，再由销售跟进转化为会员。这一路径在陈茜组的3家转化客户中均得到验证（先购买90天劲爆，后转套餐）。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. 行动建议 -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div class="section-title">行动建议</div>
+  </div>
+  <div class="section-body">
+    <div class="rec-list">
+
+      <div class="rec-item">
+        <div class="rec-title">建立"非会员→会员"标准化转化SOP <span class="priority badge-green">高优</span></div>
+        <div class="rec-desc">基于陈茜组的高转化经验，提炼"商机触达→需求挖掘→价格对比话术→优惠促成"的标准流程，形成可复制的转化SOP并在全团队推广。重点复制0.1元商机线索获取和老客续费触达两种方式。</div>
+      </div>
+
+      <div class="rec-item">
+        <div class="rec-title">设计"阶梯式"会员产品降低转化门槛 <span class="priority badge-green">高优</span></div>
+        <div class="rec-desc">针对"需求量小觉得单购划算"的50%未转化客户群体，建议设计介于单购（200元/90天）和标准套餐（3980元/年）之间的中间档产品（如季度会员1500-2000元），用更灵活的价格阶梯承接不同需求层次的客户。</div>
+      </div>
+
+      <div class="rec-item">
+        <div class="rec-title">建立跨账号/跨主体客户识别机制 <span class="priority badge-green">高优</span></div>
+        <div class="rec-desc">9家已转化客户中4家为同主体已有会员，建议在CRM系统中增加"关联账号"标识，销售触达前自动提示该主体下的会员状态，一方面避免重复触达，另一方面可基于主体已合作情况做向上销售（如开通更多子账号）。</div>
+      </div>
+
+      <div class="rec-item">
+        <div class="rec-title">优化"效果承诺"话术应对竞品挑战 <span class="priority badge-orange">中优</span></div>
+        <div class="rec-desc">针对链家案例暴露的效果感知问题（"每天100次主动聊天实际只有30个"），建议优化会员效果承诺的话术体系，用"简历推送量""面试转化率"等更可量化的指标替代"主动聊天次数"，提升客户效果感知。</div>
+      </div>
+
+      <div class="rec-item">
+        <div class="rec-title">建立过期未续费客户自动化召回机制 <span class="priority badge-green">高优</span></div>
+        <div class="rec-desc">调研显示过期未续费客户主动咨询即可转化（纳源健康案例），建议对到期前30天/到期后7天/30天的客户设置自动化触达提醒，结合优惠策略进行精准召回。</div>
+      </div>
+
+      <div class="rec-item">
+        <div class="rec-title">清理"无需求"客户减少无效投入 <span class="priority badge-orange">中优</span></div>
+        <div class="rec-desc">针对2家无实际招聘需求/误购的客户，建议在CRM中标记为"低优先级"，减少销售跟进频次，将资源转移到高潜客户上。同时优化购买流程，减少新员工误操作购买的情况。</div>
+      </div>
+
+      <div class="rec-item">
+        <div class="rec-title">开展行业化精准营销试点 <span class="priority badge-orange">中优</span></div>
+        <div class="rec-desc">已转化客户集中在医疗、餐饮、制造业、休闲娱乐、美业、互联网、建筑业7个行业，建议针对这些高转化行业设计行业专属的招聘解决方案和营销素材，提升行业客户的认同感和转化效率。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 5. 附录 -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div class="section-title">附录：完整调研客户清单</div>
+  </div>
+  <div class="section-body">
+    <table class="appendix-table">
+      <thead>
+        <tr>
+          <th class="col-num">#</th>
+          <th class="col-company">公司名称</th>
+          <th class="col-industry">行业</th>
+          <th class="col-status">会员状态</th>
+          <th class="col-type">转化类型</th>
+          <th class="col-owner">负责人</th>
+          <th class="col-price">价格</th>
+          <th class="col-survey">调研内容</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-num">1</td>
+          <td class="col-company">贵州比智高生物科技有限公司</td>
+          <td class="col-industry">医疗</td>
+          <td class="col-status"><span class="badge badge-green">已转化</span></td>
+          <td class="col-type"><span class="badge badge-green">直接转化</span></td>
+          <td class="col-owner">刘虎</td>
+          <td class="col-price">3,502</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>医疗客户，主招销售。
+<span class="survey-label">合作情况：</span>6月24日先合作非会员包，后在6月30日合作赶集套餐，并使用优惠券。客户本身招聘需求较多，且销售多次线下拜访，使用9折优惠券签单成功。</td>
+        </tr>
+        <tr>
+          <td class="col-num">2</td>
+          <td class="col-company">重庆近水医院管理有限公司</td>
+          <td class="col-industry">医疗</td>
+          <td class="col-status"><span class="badge badge-green">已转化</span></td>
+          <td class="col-type"><span class="badge badge-orange">同主体已有会员</span></td>
+          <td class="col-owner">刘虎</td>
+          <td class="col-price">-</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>医疗客户，主招医师和治疗师。
+<span class="survey-label">合作情况：</span>此客户主体下其他账号已在25年12月合作全网招3.0，此账号是新账号，只是补充发帖。销售反馈是新员工操作失败购买。</td>
+        </tr>
+        <tr>
+          <td class="col-num">3</td>
+          <td class="col-company">合肥学文文化艺术培训学校有限公司</td>
+          <td class="col-industry">教育培训</td>
+          <td class="col-status"><span class="badge badge-red">未转化</span></td>
+          <td class="col-type">-</td>
+          <td class="col-owner">刘虎</td>
+          <td class="col-price">-</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>教培，主招培训老师，上架2个劲爆和2个普通，当前无销售绑定。
+<span class="survey-label">合作情况：</span>Crm录音显示多个销售联系，客户均表示无招聘需求。且当前上架的职位也没有招到人。</td>
+        </tr>
+        <tr>
+          <td class="col-num">4</td>
+          <td class="col-company">杭州夏尔巴艺术培训有限公司</td>
+          <td class="col-industry">教育培训</td>
+          <td class="col-status"><span class="badge badge-red">未转化</span></td>
+          <td class="col-type">-</td>
+          <td class="col-owner">刘虎</td>
+          <td class="col-price">-</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>教培客户，只有一个帖子，招聘保洁，当前无销售绑定。
+<span class="survey-label">合作情况：</span>Crm录音显示多个销售联系，客户均表示无招聘需求。</td>
+        </tr>
+        <tr>
+          <td class="col-num">5</td>
+          <td class="col-company">西安海斯荣酒店管理有限公司</td>
+          <td class="col-industry">酒旅</td>
+          <td class="col-status"><span class="badge badge-red">未转化</span></td>
+          <td class="col-type">-</td>
+          <td class="col-owner">刘虎</td>
+          <td class="col-price">-</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>酒旅客户，2个职位，招聘服务员。
+<span class="survey-label">合作情况：</span>销售反馈客户预算有限，拉升不到会员套餐的价位，所以后续还是会以非会员为主。</td>
+        </tr>
+        <tr>
+          <td class="col-num">6</td>
+          <td class="col-company">云南鸿沃物流有限公司</td>
+          <td class="col-industry">货运</td>
+          <td class="col-status"><span class="badge badge-red">未转化</span></td>
+          <td class="col-type">-</td>
+          <td class="col-owner">刘虎</td>
+          <td class="col-price">-</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>货运客户，4个职位，招聘装卸工和文员，无销售绑定。
+<span class="survey-label">合作情况：</span>客户今年购买过两次非会员服务，但Crm录音，客户均是反馈无招聘需求。</td>
+        </tr>
+        <tr>
+          <td class="col-num">7</td>
+          <td class="col-company">上海盛然物流有限公司</td>
+          <td class="col-industry">货运</td>
+          <td class="col-status"><span class="badge badge-red">未转化</span></td>
+          <td class="col-type">-</td>
+          <td class="col-owner">刘虎</td>
+          <td class="col-price">-</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>货运客户，3个职位，招聘司机，无销售绑定。
+<span class="survey-label">合作情况：</span>客户今年购买过6次非会员服务，看职位曝光都不错。但Crm录音，客户均是反馈无招聘需求。</td>
+        </tr>
+        <tr>
+          <td class="col-num">8</td>
+          <td class="col-company">嘉善蓝思人力资源有限公司常州分公司</td>
+          <td class="col-industry">人力</td>
+          <td class="col-status"><span class="badge badge-red">未转化</span></td>
+          <td class="col-type">-</td>
+          <td class="col-owner">白影</td>
+          <td class="col-price">-</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>人力客户，为食品厂和电子厂代招。
+<span class="survey-label">合作情况：</span>原母账号【111640300468808】于25年5月在苏州合作9400元的人力套餐，目前已到期未续费。
+<span class="survey-label">未续费原因：</span>销售反馈客户项目转至武汉且不再回复他，可能更换主体去武汉合作了。</td>
+        </tr>
+        <tr>
+          <td class="col-num">9</td>
+          <td class="col-company">青岛富凯建筑劳务工程有限公司</td>
+          <td class="col-industry">建筑业</td>
+          <td class="col-status"><span class="badge badge-red">未转化</span></td>
+          <td class="col-type">-</td>
+          <td class="col-owner">白影</td>
+          <td class="col-price">-</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>建筑客户，主要招聘建筑工人。客户的招聘需求根据建筑项目确定。
+<span class="survey-label">合作情况：</span>25年2月份合作3980套餐，已到期未续费。
+<span class="survey-label">未续费原因：</span>客户招聘需求缩减、招聘职位较少且不是长期招聘，觉得单购更划算，故暂未续费。后续招聘需求量大时会考虑合作会员。</td>
+        </tr>
+        <tr>
+          <td class="col-num">10</td>
+          <td class="col-company">杭州欧冠装饰工程有限公司</td>
+          <td class="col-industry">建筑业</td>
+          <td class="col-status"><span class="badge badge-green">已转化</span></td>
+          <td class="col-type"><span class="badge badge-orange">同主体已有会员</span></td>
+          <td class="col-owner">白影</td>
+          <td class="col-price">-</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>建筑客户，既做装饰业务，也有定制展柜柜台的业务。不是做家庭装修的，是给门店商铺做定制展具配套那种装饰的，在杭州和上饶都有店，招聘造价员、工人、家具设计师等岗位。
+<span class="survey-label">合作情况：</span>同主体其他账号【55613984692241】在25年2月和7月合作1680元的季度套餐，并于26年2月续费3980元套餐，仍在服务中。此账号线上单购是因为同事登录账号错误导致误买的。</td>
+        </tr>
+        <tr>
+          <td class="col-num">11</td>
+          <td class="col-company">上海毓博文才网络科技有限公司</td>
+          <td class="col-industry">互联网</td>
+          <td class="col-status"><span class="badge badge-green">已转化</span></td>
+          <td class="col-type"><span class="badge badge-orange">同主体已有会员</span></td>
+          <td class="col-owner">白影</td>
+          <td class="col-price">-</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>客户主营业务-小象超市，覆盖多城市，招聘需求很大，年需求在（50-100人左右）。主要招聘分拣员、快递员等。
+<span class="survey-label">合作情况：</span>客户使用同主体其他账号【110475501849409】于26年5月22日合作3000元的赶集简历宝套餐，仍在服务中。</td>
+        </tr>
+        <tr>
+          <td class="col-num">12</td>
+          <td class="col-company">四川链家房地产经纪有限公司盛华南路复城国际分公司</td>
+          <td class="col-industry">房地产业</td>
+          <td class="col-status"><span class="badge badge-red">未转化</span></td>
+          <td class="col-type">-</td>
+          <td class="col-owner">白影</td>
+          <td class="col-price">-</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>房产客户，主要招聘房产销售。
+<span class="survey-label">合作情况：</span>账号原认证主体为【四川链家房地产经纪有限公司吉庆一路第一分公司】，于25年5月合作3980套餐。目前原主体注销，账号被冻结。经纪人上传认证成了新主体【四川链家房地产经纪有限公司盛华南路复城国际分公司】，客户不再续费，故未申诉解冻。
+<span class="survey-label">未续费原因：</span>效果不好。账号开通说是说每天100次主动聊天，但是除开一些大龄的，基本在20-40的人，每天能有30个就不错了。
+<span class="survey-label">竞品合作：</span>客户集团在Boss有战略合作，经纪人拿的集团的账号招聘，具体合作金额不清楚。另外，之前58收链家5倍合作费用丢掉了这个客户，因此和58没有战略合作。</td>
+        </tr>
+        <tr>
+          <td class="col-num">13</td>
+          <td class="col-company">中国人寿保险股份有限公司杭州市分公司</td>
+          <td class="col-industry">保险</td>
+          <td class="col-status"><span class="badge badge-red">未转化</span></td>
+          <td class="col-type">-</td>
+          <td class="col-owner">秦思雨</td>
+          <td class="col-price">-</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>保险客户
+<span class="survey-label">合作情况：</span>25年2月合作4980档位套餐，到期后未续费
+<span class="survey-label">未续费原因：</span>客户是保险主管，自负盈亏，招聘需求量受公司补贴程度影响较大</td>
+        </tr>
+        <tr>
+          <td class="col-num">14</td>
+          <td class="col-company">中国平安人寿保险股份有限公司浙江分公司</td>
+          <td class="col-industry">保险</td>
+          <td class="col-status"><span class="badge badge-red">未转化</span></td>
+          <td class="col-type">-</td>
+          <td class="col-owner">秦思雨</td>
+          <td class="col-price">-</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>保险客户
+<span class="survey-label">合作情况：</span>未合作过会员
+<span class="survey-label">未续费原因：</span>客户是保险主管，自负盈亏，招聘需求量受公司补贴程度影响较大</td>
+        </tr>
+        <tr>
+          <td class="col-num">15</td>
+          <td class="col-company">双流柏楠饰品店</td>
+          <td class="col-industry">批发零售</td>
+          <td class="col-status"><span class="badge badge-red">未转化</span></td>
+          <td class="col-type">-</td>
+          <td class="col-owner">秦思雨</td>
+          <td class="col-price">-</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>批发零售行业，饰品店
+<span class="survey-label">合作情况：</span>未合作过会员
+<span class="survey-label">未续费原因：</span>老板控制成本不给钱，客户在所有平台单购，不固定用哪个平台，需要便宜；下面人事"东蹭点西蹭点"</td>
+        </tr>
+        <tr>
+          <td class="col-num">16</td>
+          <td class="col-company">沈阳市和平区桃姐串吧</td>
+          <td class="col-industry">餐饮</td>
+          <td class="col-status"><span class="badge badge-green">已转化</span></td>
+          <td class="col-type"><span class="badge badge-green">直接转化</span></td>
+          <td class="col-owner">秦思雨</td>
+          <td class="col-price">3,000</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>餐饮行业，串吧，店铺人员规模10-15人
+<span class="survey-label">合作情况：</span>挽回客户，24年12月成交会员套餐之后，中间短暂用了非会员劲爆之后26年6月转成会员，成交金额从4580降为3000
+<span class="survey-label">转会员原因：</span>销售挽回客户，看到有招聘需要一直联系；客户单独买职位一直没有太合适的人，平时没时间上账号联系，推荐简历宝套餐；客户之前也用过BOSS</td>
+        </tr>
+        <tr>
+          <td class="col-num">17</td>
+          <td class="col-company">深圳市鑫川粤汽车服务有限公司</td>
+          <td class="col-industry">汽车服务</td>
+          <td class="col-status"><span class="badge badge-red">未转化</span></td>
+          <td class="col-type">-</td>
+          <td class="col-owner">秦思雨</td>
+          <td class="col-price">-</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>汽车服务行业，门店面积小，封顶6人
+<span class="survey-label">合作情况：</span>25年2月合作3000元套餐，到期未续费
+<span class="survey-label">未续费原因：</span>客户当时买职位正值春战旺季，有包装优惠，约见拜访后成交；后面转续费那边没跟进，店面忙人手不够</td>
+        </tr>
+        <tr>
+          <td class="col-num">18</td>
+          <td class="col-company">上海久斯台球用品制造有限公司</td>
+          <td class="col-industry">制造业</td>
+          <td class="col-status"><span class="badge badge-green">已转化</span></td>
+          <td class="col-type"><span class="badge badge-green">直接转化</span></td>
+          <td class="col-owner">陈茜</td>
+          <td class="col-price">3,383</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>上海久斯台球是中国九球的品牌。久斯台球用品制造有限公司销售中高档各式台球桌：美式台球桌、花式九球桌、斯诺克台球桌、雕刻台球桌、两用台球桌等。
+<span class="survey-label">主招岗位：</span>客服专员/助理 5 | 门店店长 3 | 普工/操作工 2 | 网络销售 2 | 台球教练 2
+<span class="survey-label">合作情况：</span>6月25日先购买90天劲爆职位，在6月30日合作58套餐，参与新签85折活动。
+<span class="survey-label">转化会员原因：</span>客户已经合作会员5年了，是老客户，销售和客户说会员划算（①比对单职位一年价格和套餐价格含8个职位点；②会员流量优先推送，效果会比较好），客户就合作了。</td>
+        </tr>
+        <tr>
+          <td class="col-num">19</td>
+          <td class="col-company">纳源健康科技重庆有限公司</td>
+          <td class="col-industry">休闲娱乐</td>
+          <td class="col-status"><span class="badge badge-green">已转化</span></td>
+          <td class="col-type"><span class="badge badge-green">直接转化</span></td>
+          <td class="col-owner">陈茜</td>
+          <td class="col-price">3,582</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>主打足疗 SPA 养生
+<span class="survey-label">主招岗位：</span>芳疗师 1
+<span class="survey-label">合作情况：</span>6月12日先购买90天劲爆职位，在6月30日合作58套餐，并使用优惠券。
+<span class="survey-label">转化会员原因：</span>客户是过期未续费客户主动来咨询的。和90天职位关系不大。</td>
+        </tr>
+        <tr>
+          <td class="col-num">20</td>
+          <td class="col-company">河南省豆小新美容服务有限公司</td>
+          <td class="col-industry">美业</td>
+          <td class="col-status"><span class="badge badge-green">已转化</span></td>
+          <td class="col-type"><span class="badge badge-green">直接转化</span></td>
+          <td class="col-owner">陈茜</td>
+          <td class="col-price">3,680</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>简称豆小新，主打专业祛痘、问题肌肤修复连锁加盟品牌，总部位于郑州，面向全国开放美业门店加盟。官网：http://www.douxiaoxin.com/
+<span class="survey-label">主招岗位：</span>美容导师 10 | 客服专员/助理 4 | 美容师 2 | 销售经理/主管 1 | 销售专员 1
+<span class="survey-label">合作情况：</span>6月23日先购买90天劲爆职位，在6月26日合作赶集套餐。
+<span class="survey-label">转化会员原因：</span>销售触达客户是通过0.1元的商机，然后联系到客户，进行的转化。销售话术：会员的优势的曝光量大，推送人员更加的精准等。</td>
+        </tr>
+        <tr>
+          <td class="col-num">21</td>
+          <td class="col-company">杭州手拉手工具制造有限公司</td>
+          <td class="col-industry">制造业</td>
+          <td class="col-status"><span class="badge badge-red">未转化</span></td>
+          <td class="col-type">-</td>
+          <td class="col-owner">陈茜</td>
+          <td class="col-price">-</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>轻资产小作坊模式，业务分为两块：自有五金 / 塑胶工具生产、模具定制加工。
+<span class="survey-label">主招岗位：</span>普工/操作工 4 | 机修工 2 | 仓库管理员 2
+<span class="survey-label">未转成会员原因：</span>客户想自己用，自己玩这个平台，之前聊过续费的事，但是聊完无合作意向。</td>
+        </tr>
+        <tr>
+          <td class="col-num">22</td>
+          <td class="col-company">上海青雀保健按摩有限责任公司</td>
+          <td class="col-industry">休闲娱乐</td>
+          <td class="col-status"><span class="badge badge-red">未转化</span></td>
+          <td class="col-type">-</td>
+          <td class="col-owner">陈茜</td>
+          <td class="col-price">-</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>线下实体足道 SPA 养生馆，品牌名云上 spa 足道养生
+<span class="survey-label">主招岗位：</span>足疗师 4 | 其他职位 1 | 做饭阿姨 1
+<span class="survey-label">未转成会员原因：</span>客户主观性比较强，喜欢自己操作。26年2月到期未续，客户目前就招1-2个职位，花200多就能发布90天，为什么要花3980办理套餐，而且会员用单独买一个职位大概是150左右展示30天，普通用户200多展示90天，客户还是觉得单独买职位划算些</td>
+        </tr>
+        <tr>
+          <td class="col-num">23</td>
+          <td class="col-company">太原合一众创健身管理咨询有限公司</td>
+          <td class="col-industry">休闲娱乐</td>
+          <td class="col-status"><span class="badge badge-green">已转化</span></td>
+          <td class="col-type"><span class="badge badge-orange">同主体已有会员</span></td>
+          <td class="col-owner">陈茜</td>
+          <td class="col-price">-</td>
+          <td class="col-survey"><span class="survey-label">业务介绍：</span>主打健身房托管、新店筹建、门店运营赋能、私教团队培训。
+<span class="survey-label">主招岗位：</span>健身教练 1 | 前台/接待 1 | 短视频运营 1 | 会籍顾问 1 | 销售专员 1
+<span class="survey-label">未转成会员原因：</span>客户有多个账号，其中，117816452546888已经合作会员了。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p>本报告基于58美事文档调研数据自动生成 | 数据来源：docs.58corp.com</p>
+  <p>报告生成时间：2026年7月9日 | 口径说明：同主体已有会员账号视为已转化</p>
+</div>
+
+</div>
+</body>
+</html>
